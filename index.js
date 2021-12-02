@@ -32,17 +32,9 @@ app.get('/api/notes/:id', (request, response, next) => {
 
 app.delete('/api/notes/:id', (request, response, next) => {
   Note.findByIdAndRemove(request.params.id)
-    .then((result) => response.status(204).end())
+    .then(() => response.status(204).end())
     .catch((error) => next(error))
 })
-
-const generateId = () => {
-  const maxId =
-    notes.length > 0 //force-wrap
-      ? Math.max(...notes.map((n) => n.id))
-      : 0
-  return maxId + 1
-}
 
 app.post('/api/notes', (request, response, next) => {
   const body = request.body
@@ -68,13 +60,15 @@ app.put('/api/notes/:id', (request, response, next) => {
     important: body.important,
   }
 
-  Note.findByIdAndUpdate(request.params.id, note, {new: true})
+  Note.findByIdAndUpdate(request.params.id, note, { new: true })
     .then((updatedNote) => {
       response.json(updatedNote)
     })
     .catch((error) => next(error))
 })
 
+// for eslint to ignore process is not defined
+/* global process */
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
@@ -84,9 +78,9 @@ const errorHandler = (error, request, response, next) => {
   console.error(error.message)
 
   if (error.name === 'CastError') {
-    return response.status(400).send({error: 'malformatted id'})
+    return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
-    return response.status(400).json({error: error.message})
+    return response.status(400).json({ error: error.message })
   }
 
   next(error)

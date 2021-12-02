@@ -1,13 +1,15 @@
 const mongoose = require('mongoose')
 
+// for eslint to ignore process undefined
+/* global process */
 const url = process.env.MONGODB_URI
 
-console.log('connecting to', url)
+console.log('connecting to MongoDB')
 
 mongoose
   .connect(url)
-  .then((result) => {
-    console.log('connected to MongoDB')
+  .then(() => {
+    console.log('connected to MongoDB...')
   })
   .catch((error) => {
     console.log('error connecting to MongoDB:', error.message)

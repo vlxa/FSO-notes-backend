@@ -1,5 +1,8 @@
 const mongoose = require('mongoose')
 
+// for eslint to ignore process undefined
+/* global process */
+
 if (process.argv.length < 3) {
   console.log(
     'Please provide the password as an argument: node mongo.js <password>'
