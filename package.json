@@ -6,8 +6,15 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:ui": "rm -rf build && cd ../full-stack-open/phonebook && npm run build -prod && cp -r build ../../FSO-phonebook-backend",
+    "deploy": "git push heroku main",
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
+    "logs:prod": "npx heroku logs --tail",
+    "test": "jest --verbose",
     "lint": "eslint ."
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "author": "vlxa",
   "license": "MIT",
@@ -19,6 +26,7 @@
   },
   "devDependencies": {
     "eslint": "^8.3.0",
+    "jest": "^27.4.3",
     "nodemon": "^2.0.15"
   }
 }
