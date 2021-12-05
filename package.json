@@ -4,17 +4,14 @@
   "description": "FSO first backend app",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
     "build:ui": "rm -rf build && cd ../full-stack-open/phonebook && npm run build -prod && cp -r build ../../FSO-phonebook-backend",
     "deploy": "git push heroku main",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
     "logs:prod": "npx heroku logs --tail",
-    "test": "jest --verbose",
+    "test": "jest --verbose --runInBand",
     "lint": "eslint ."
-  },
-  "jest": {
-    "testEnvironment": "node"
   },
   "author": "vlxa",
   "license": "MIT",
@@ -25,8 +22,10 @@
     "mongoose": "^6.0.13"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^8.3.0",
     "jest": "^27.4.3",
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "supertest": "^6.1.6"
   }
 }
