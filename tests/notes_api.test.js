@@ -67,6 +67,21 @@ test('a valid note can be added', async () => {
   )
 })
 
+test('note without content is not added', async () => {
+  const newNote = {
+    important: true
+  }
+
+  await api
+    .post('/api/notes')
+    .send(newNote)
+    .expect(400)
+
+  const response = await api.get('/api/notes')
+
+  expect(response.body).toHaveLength(initialNotes.length)
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
