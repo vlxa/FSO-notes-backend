@@ -1,8 +1,5 @@
 const mongoose = require('mongoose')
 
-// for eslint to ignore process undefined
-/* global process */
-
 if (process.argv.length < 3) {
   console.log(
     'Please provide the password as an argument: node mongo.js <password>'
@@ -42,8 +39,8 @@ const Note = mongoose.model('Note', noteSchema)
 //   mongoose.connection.close()
 // })
 
-Note.find({}).then((result) => {
-  result.forEach((note) => {
+Note.find({}).then(result => {
+  result.forEach(note => {
     console.log(note)
   })
   mongoose.connection.close()
