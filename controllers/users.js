@@ -3,18 +3,27 @@ const usersRouter = require('express').Router()
 const User = require('../models/user')
 
 usersRouter.post('/', async ({ body }, response) => {
-  const saltRounds = 10
-  const passwordHash = await bcrypt.hash(body.password, saltRounds)
+  if (body.password.length >= 8) {
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(body.password, saltRounds)
 
-  const user = new User({
-    username: body.username,
-    name: body.name,
-    passwordHash,
-  })
+    const user = new User({
+      username: body.username,
+      name: body.name,
+      passwordHash,
+    })
 
-  const savedUser = await user.save()
+    const savedUser = await user.save()
 
-  response.json(savedUser)
+    response.json(savedUser)
+  }
+
+  response.status(400).json({ error: 'Password too short, use at least 8 characters' })
+})
+
+usersRouter.get('/', async (request, response) => {
+  const users = await User.find({})
+  response.json(users)
 })
 
 module.exports = usersRouter
