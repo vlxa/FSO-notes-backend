@@ -2,16 +2,18 @@ const supertest = require('supertest')
 const mongoose = require('mongoose')
 const helper = require('./test_helper')
 const app = require('../app')
+
 const api = supertest(app)
 
 const Note = require('../models/note')
 
 beforeEach(async () => {
   await Note.deleteMany({})
-
-  for (let note of helper.initialNotes) {
-    let noteObject = new Note(note)
-    await noteObject.save()
+  // notes to be saved in order
+  /* eslint-disable no-restricted-syntax */
+  for (const note of helper.initialNotes) {
+    const noteObject = new Note(note)
+    await noteObject.save() // eslint-disable-line no-await-in-loop
   }
 })
 
@@ -31,9 +33,9 @@ describe('Access and view notes', () => {
 
   test('a specific note is within the returned notes', async () => {
     const response = await api.get('/api/notes')
-    const contents = response.body.map(r => r.content)
+    const contents = response.body.map((r) => r.content)
     expect(contents).toContain(
-      'Browser can execute only Javascript'
+      'Browser can execute only Javascript',
     )
   })
 })
@@ -68,15 +70,15 @@ describe('Adding notes', () => {
     const notesAtEnd = await helper.notesInDb()
     expect(notesAtEnd).toHaveLength(helper.initialNotes.length + 1)
 
-    const contents = notesAtEnd.map(n => n.content)
+    const contents = notesAtEnd.map((n) => n.content)
     expect(contents).toContain(
-      'async/await simplifies making async calls'
+      'async/await simplifies making async calls',
     )
   })
 
   test('note without content is not added', async () => {
     const newNote = {
-      important: true
+      important: true,
     }
 
     await api
@@ -100,10 +102,10 @@ describe('Delete note', () => {
 
     const notesAtEnd = await helper.notesInDb()
     expect(notesAtEnd).toHaveLength(
-      helper.initialNotes.length - 1
+      helper.initialNotes.length - 1,
     )
 
-    const contents = notesAtEnd.map(r => r.content)
+    const contents = notesAtEnd.map((r) => r.content)
     expect(contents).not.toContain(noteToDelete.content)
   })
 })

@@ -8,10 +8,12 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Note',
-    }
+    },
   ],
 })
 
+/* eslint no-underscore-dangle: "off" */
+/* eslint no-param-reassign: ["error", { "props": false }] */
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString()
