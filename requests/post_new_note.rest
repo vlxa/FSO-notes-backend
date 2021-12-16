@@ -3,8 +3,9 @@ POST http://localhost:3001/api/notes HTTP/1.1
 content-type: application/json
 
 {
-    "content": "Some sample content for a new note",
-    "important": true
+    "content": "This is another note with user id atached",
+    "important": true,
+    "user": "61bb6ac29cd5ee989eda0c0f"
 }
 
 ### Get all notes
