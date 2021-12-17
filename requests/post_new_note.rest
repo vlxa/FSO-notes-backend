@@ -1,11 +1,11 @@
 ### POST a new note
 POST http://localhost:3001/api/notes HTTP/1.1
-content-type: application/json
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZseGEiLCJpZCI6IjYxYmJhYmI4NTRkMTRiOWM5MTA2MjQ1NCIsImlhdCI6MTYzOTY5MTkyOX0.mdIlx-2jO6i4ayQzTujvo636Gd-S4YBbXb3kgmoKsZI
 
 {
-    "content": "This is another note with user id atached",
-    "important": true,
-    "user": "61bb6ac29cd5ee989eda0c0f"
+    "content": "Maybe working now",
+    "important": true
 }
 
 ### Get all notes

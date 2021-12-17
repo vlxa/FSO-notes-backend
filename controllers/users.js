@@ -16,9 +16,9 @@ usersRouter.post('/', async ({ body }, response) => {
     const savedUser = await user.save()
 
     response.json(savedUser)
+  } else {
+    response.status(400).json({ error: 'Password too short, use at least 8 characters' })
   }
-
-  response.status(400).json({ error: 'Password too short, use at least 8 characters' })
 })
 
 usersRouter.get('/', async (request, response) => {

@@ -19,7 +19,6 @@ beforeEach(async () => {
 
 describe('Access and view notes', () => {
   test('notes are returned as json', async () => {
-    console.log('entered test')
     await api
       .get('/api/notes')
       .expect(200)
@@ -61,8 +60,16 @@ describe('Adding notes', () => {
       important: true,
     }
 
+    const { body: { token } } = await api
+      .post('/api/login')
+      .send({
+        username: 'vlxa',
+        password: 'vlxapasswd',
+      })
+
     await api
       .post('/api/notes')
+      .set('Authorization', `Bearer ${token}`)
       .send(newNote)
       .expect(200)
       .expect('Content-Type', /application\/json/)
@@ -81,8 +88,16 @@ describe('Adding notes', () => {
       important: true,
     }
 
+    const { body: { token } } = await api
+      .post('/api/login')
+      .send({
+        username: 'vlxa',
+        password: 'vlxapasswd',
+      })
+
     await api
       .post('/api/notes')
+      .set('Authorization', `Bearer ${token}`)
       .send(newNote)
       .expect(400)
 
